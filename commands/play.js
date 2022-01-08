@@ -16,7 +16,6 @@ module.exports = {
         if (!interaction.member.voice.channelId) {
             return await interaction.reply({content: "You are not in a voice channel!", ephemeral: true});
         }
-
         if (interaction.guild.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.me.voice.channelId) {
             return await interaction.reply({content: "You are not in my voice channel!", ephemeral: true});
         }
@@ -37,12 +36,15 @@ module.exports = {
         }
 
         await interaction.deferReply();
+
         const track = await player.search(query, {
             requestedBy: interaction.user,
             safeSearch: false,
             searchEngine: QueryType.AUTO
         }).then(x => x.tracks[0]);
-        if (!track) return await interaction.followUp({content: `:x: | Track **${query}** not found`});
+        if (!track) {
+            return await interaction.followUp({content: `:x: | Track **${query}** not found`});
+        }
 
         queue.play(track);
 
