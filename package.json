@@ -1,0 +1,27 @@
+{
+  "name": "revibe",
+  "version": "1.0.0",
+  "description": "Because all the other Discord Music Bots suck. Made by someone who's vibe was ruined.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ViperFlex/ReVibe.git"
+  },
+  "author": "Arpit Agrawal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ViperFlex/ReVibe/issues"
+  },
+  "homepage": "https://github.com/ViperFlex/ReVibe#readme",
+  "dependencies": {
+    "@discordjs/builders": "^0.11.0",
+    "@discordjs/opus": "^0.5.3",
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "discord-api-types": "^0.26.1",
+    "discord-player": "^5.2.0",
+    "discord.js": "^13.5.1"
+  }
+}
