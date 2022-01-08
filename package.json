@@ -4,6 +4,8 @@
   "description": "Because all the other Discord Music Bots suck. Made by someone who's vibe was ruined.",
   "main": "index.js",
   "scripts": {
+    "serve": "node .",
+    "reserve": "node deploy-commands.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
