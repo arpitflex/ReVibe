@@ -20,7 +20,7 @@ module.exports = {
             return await interaction.followUp({content: `:pause_button: | **Paused**`});
         } else {
             queue.setPaused(false);
-            return await interaction.followUp({content: `:arrow_forward: | **Continuing playback!**`});
+            return await interaction.followUp({content: `:arrow_forward: | **Continuing playback**`});
         }
     }
 }
