@@ -21,8 +21,9 @@ module.exports = {
         }
 
         await interaction.deferReply();
-        if (!queue?.playing)
+        if (!queue.playing) {
             return await interaction.followUp({content: 'No music is currently being played'});
+        }
 
         const trackNumber = interaction.options.getInteger('track_number');
         const queueLength = queue.tracks.length;

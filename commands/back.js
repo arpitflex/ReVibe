@@ -2,8 +2,8 @@ const {SlashCommandBuilder} = require('@discordjs/builders');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('skip')
-        .setDescription('Skip the current song!'),
+        .setName('back')
+        .setDescription('Play the previous song!'),
     async execute(interaction, client, player) {
         const queue = player.getQueue(interaction.guildId);
 
@@ -15,12 +15,13 @@ module.exports = {
         }
 
         await interaction.deferReply();
-        if (!queue.playing) {
-            return await interaction.followUp({content: 'No music is currently being played'});
+
+        if (queue.previousTracks.length <= 1) {
+            return await interaction.followUp({content: 'No previous tracks', ephemeral: true});
         }
 
-        queue.skip()
+        await queue.back()
 
-        return await interaction.followUp({content: `:next_track: | Skipped **${queue.current.title}**`});
+        return await interaction.followUp({content: `:previous_track: | Playing **${queue.current.title}** again`, ephemeral: true});
     }
 }
