@@ -14,8 +14,6 @@ const playCommand = new SlashCommandBuilder()
 
 module.exports = {
     data: playCommand, async execute(interaction, client, player) {
-        await interaction.deferReply();
-
         if (!interaction.member.voice.channelId) {
             return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
         }
@@ -38,6 +36,7 @@ module.exports = {
             return await interaction.reply({content: 'Could not join your voice channel', ephemeral: true});
         }
 
+        await interaction.deferReply();
         const track = await player.search(query, {
             requestedBy: interaction.user,
             safeSearch: false,
@@ -54,7 +53,10 @@ module.exports = {
             .setColor('#fbd75a')
             .setTitle(track.title)
             .setURL(track.url)
-            .setAuthor({name: 'Added to queue', iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`})
+            .setAuthor({
+                name: 'Added to queue',
+                iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`
+            })
             .setThumbnail(track.thumbnail)
             .addField('Duration', track.duration, true)
             .addField('Source', track.source, true)

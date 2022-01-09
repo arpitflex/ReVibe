@@ -11,7 +11,6 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction, client, player) {
-        await interaction.deferReply();
         const queue = player.getQueue(interaction.guildId);
 
         if (!interaction.member.voice.channelId) {
@@ -21,6 +20,7 @@ module.exports = {
             return await interaction.reply({content: 'You are not in my voice channel', ephemeral: true});
         }
 
+        await interaction.deferReply();
         if (!queue?.playing)
             return await interaction.followUp({content: 'No music is currently being played'});
 

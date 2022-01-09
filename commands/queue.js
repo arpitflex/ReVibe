@@ -6,11 +6,10 @@ module.exports = {
         .setName('queue')
         .setDescription('View the current queue!'),
     async execute(interaction, client, player) {
-        await interaction.deferReply();
         const queue = player.getQueue(interaction.guildId);
         const tracks = queue.tracks;
         if (!queue.playing) {
-            return await interaction.followUp({content: 'No music is currently being played', ephemeral: true});
+            return await interaction.reply({content: 'No music is currently being played', ephemeral: true});
         }
 
         let queueMessage = '';
@@ -26,14 +25,14 @@ module.exports = {
             .addField(':arrow_forward: | Now Playing:', `[${current.title}](${current.url}) | \`${current.duration} Requested by: ${current.requestedBy.username}\``)
             .setFooter({
                 text: `${tracks.length === 1 ? '1 track' : tracks.length + ' tracks'} in queue`,
-                iconURL: interaction.user.avatar.startsWith('a_') ? `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.gif` : `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`
+                iconURL: interaction.user.avatar?.startsWith('a_') ? `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.gif` : `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`
             });
         if (tracks.length !== 0) {
             queueEmbed
                 .addField('\u200b', '\u200b')
                 .addField(':arrow_heading_down: | Up Next:', queueMessage)
         }
-
+        await interaction.deferReply();
         return await interaction.followUp({embeds: [queueEmbed]});
     }
 }
