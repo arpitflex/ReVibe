@@ -1,7 +1,7 @@
 const fs = require('fs');
 const {Client, Collection, Intents} = require('discord.js');
 const {token} = require('./config.json');
-const {Player} = require("discord-player");
+const {Player} = require('discord-player');
 
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES]});
 
@@ -9,7 +9,7 @@ client.commands = new Collection();
 
 const player = new Player(client);
 
-player.on("trackStart", (queue, track) => queue.metadata.channel.send(`:musical_note: | Now playing **${track.title}**`))
+player.on('trackStart', (queue, track) => queue.metadata.channel.send(`:musical_note: | Now playing **${track.title}**`))
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));

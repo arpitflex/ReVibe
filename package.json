@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "node .",
-    "reserve": "node deploy-commands.js"
+    "reserve": "node deploy-commands.js && node ."
   },
   "repository": {
     "type": "git",

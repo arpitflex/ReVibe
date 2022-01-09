@@ -5,12 +5,12 @@ module.exports = {
         .setName('skip')
         .setDescription('Skip the current song!'),
     async execute(interaction, client, player) {
+        await interaction.deferReply();
         const queue = player.getQueue(interaction.guildId);
         if (!queue?.playing)
             return interaction.followUp({
-                content: "No music is currently being played",
+                content: 'No music is currently being played',
             });
-        await interaction.deferReply();
 
         queue.skip()
 
