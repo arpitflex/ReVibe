@@ -1,5 +1,6 @@
 const {QueryType} = require('discord-player');
 const {SlashCommandBuilder} = require('@discordjs/builders');
+const {MessageEmbed} = require("discord.js");
 
 const playCommand = new SlashCommandBuilder()
     .setName('play')
@@ -46,8 +47,19 @@ module.exports = {
             return await interaction.followUp({content: `:x: | Track **${query}** not found`});
         }
 
-        queue.play(track);
+        await queue.play(track);
 
-        return await interaction.followUp({content: `:timer: | Loading track **${track.title}**`});
+        const queueLength = queue.tracks.length;
+        const playEmbed = new MessageEmbed()
+            .setColor('#fbd75a')
+            .setTitle(track.title)
+            .setURL(track.url)
+            .setAuthor({name: 'Added to queue', iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`})
+            .setThumbnail(track.thumbnail)
+            .addField('Duration', track.duration, true)
+            .addField('Source', track.source, true)
+            .addField('Position in queue', queueLength === 0 ? 'Now playing' : String(queueLength), true);
+
+        return await interaction.followUp({embeds: [playEmbed]});
     }
 };

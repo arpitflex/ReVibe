@@ -9,7 +9,7 @@ client.commands = new Collection();
 
 const player = new Player(client);
 
-player.on('trackStart', (queue, track) => queue.metadata.channel.send(`:musical_note: | Now playing **${track.title}**`))
+player.on('trackStart', (queue, track) => queue.metadata.channel.send(`:musical_note: | Now playing **${track.title}**`));
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));

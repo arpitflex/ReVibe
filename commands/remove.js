@@ -23,8 +23,7 @@ module.exports = {
             return await interaction.followUp({content: `Track **${trackNumber}** is not in queue of currently **${queueLength}** tracks`});
         }
 
-        const track = queue.remove(trackNumber)
-
-        return await interaction.followUp({content: `:wastebasket: | Removed **${track.title} from queue**`});
+        const removed = queue.remove(trackNumber - 1);
+        return await interaction.followUp({content: `:wastebasket: | Removed **${removed.title}** from queue`});
     }
 }
