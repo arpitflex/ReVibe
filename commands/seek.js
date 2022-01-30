@@ -24,6 +24,6 @@ module.exports = {
 
         await queue.seek(seconds * 1000);
 
-        return await interaction.followUp({content: `:fast_forward: | **Seeking to ${seconds} seconds**`});
+        return await interaction.followUp({content: `:fast_forward: | Seeking to **${seconds} seconds**`});
     }
 }
