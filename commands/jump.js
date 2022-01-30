@@ -2,12 +2,12 @@ const {SlashCommandBuilder} = require('@discordjs/builders');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('remove')
-        .setDescription('Remove a track from the queue!')
+        .setName('jump')
+        .setDescription('Jump to a particular track!')
         .addIntegerOption((option) =>
             option
                 .setName('track_number')
-                .setDescription('Track number of song to remove from queue')
+                .setDescription('Track number of song to jump to')
                 .setRequired(true)
         ),
     async execute(interaction, client, player) {
@@ -27,7 +27,7 @@ module.exports = {
             return await interaction.followUp({content: `Track **${trackNumber}** is not in queue of currently **${queueLength}** tracks`});
         }
 
-        const removed = queue.remove(trackNumber - 1);
-        return await interaction.followUp({content: `:wastebasket: | Removed **${removed.title}** from queue`});
+        await queue.skipTo(trackNumber - 1);
+        return await interaction.followUp({content: `:arrow_right_hook: | Jumped to track **${trackNumber}** in queue`});
     }
 }
