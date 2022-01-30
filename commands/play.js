@@ -37,6 +37,7 @@ module.exports = {
         }
 
         await interaction.deferReply();
+
         const tracks = await player.search(query, {
             requestedBy: interaction.user,
             safeSearch: false,
@@ -47,14 +48,15 @@ module.exports = {
         }
 
         const track = tracks[0];
-
         await queue.play(track);
 
-        const queueLength = queue.tracks.length;
         tracks.shift();
-        if (tracks.length > 1) {
+        const isPlaylist = query.includes('/playlist' || '/album');
+        if (isPlaylist && tracks.length > 1) {
             queue.addTracks(tracks)
         }
+
+        const queueLength = queue.tracks.length;
         const playEmbed = new MessageEmbed()
             .setColor('#fbd75a')
             .setTitle(track.title)
