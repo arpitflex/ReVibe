@@ -37,18 +37,24 @@ module.exports = {
         }
 
         await interaction.deferReply();
-        const track = await player.search(query, {
+        const tracks = await player.search(query, {
             requestedBy: interaction.user,
             safeSearch: false,
             searchEngine: QueryType.AUTO
-        }).then(x => x.tracks[0]);
-        if (!track) {
+        }).then(x => x.tracks);
+        if (!tracks || tracks.length === 0) {
             return await interaction.followUp({content: `:x: | Track **${query}** not found`});
         }
+
+        const track = tracks[0];
 
         await queue.play(track);
 
         const queueLength = queue.tracks.length;
+        tracks.shift();
+        if (tracks.length > 1) {
+            queue.addTracks(tracks)
+        }
         const playEmbed = new MessageEmbed()
             .setColor('#fbd75a')
             .setTitle(track.title)
