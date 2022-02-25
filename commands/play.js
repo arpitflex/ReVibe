@@ -49,6 +49,7 @@ module.exports = {
 
         const track = tracks[0];
         await queue.play(track);
+        const queueLength = queue.tracks.length;
 
         tracks.shift();
         const isPlaylist = query.includes('/playlist' || '/album');
@@ -56,7 +57,6 @@ module.exports = {
             queue.addTracks(tracks)
         }
 
-        const queueLength = queue.tracks.length;
         const playEmbed = new MessageEmbed()
             .setColor('#fbd75a')
             .setTitle(track.title)
