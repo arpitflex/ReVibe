@@ -10,6 +10,12 @@ client.commands = new Collection();
 const player = new Player(client);
 
 player.on('trackStart', (queue, track) => queue.metadata.channel.send(`:musical_note: | Now playing **${track.title}**`));
+player.on('error', (queue, error) => {
+    console.error(error);
+    const tracks = queue.tracks;
+    console.log(tracks);
+    queue.metadata.channel.send(`:interrobang: | Error encountered check logs: ${error.name}`);
+});
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
