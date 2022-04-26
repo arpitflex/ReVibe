@@ -7,7 +7,15 @@ const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_M
 
 client.commands = new Collection();
 
-const player = new Player(client);
+const player = new Player(client, {
+    ytdlOptions: {
+        requestOptions: {
+            headers: {
+                cookie: "YSC=wlzowWc807M; CONSENT=YES+yt.444115696.en+FX+897; PREF=f4=4000000&tz=Europe.Berlin&f6=40000000; VISITOR_INFO1_LIVE=kuJjyI95P4w; GPS=1; CONSISTENCY=AGDxDeP7TgEnV4xoQ8HhcDjm6Boaeeq8_-_azXxLrPdpMzQ_J-rbcbluh6tcPrFP3ek9DEbEPeP5I6uRAtKnui2DiEqmeLQRzvvR4bVXmYFSVCCCb9J6zGRANJeb-72qFLaK5cVRnG3NiXR0gd3GJA"
+            }
+        }
+    }
+});
 
 player.on('trackStart', (queue, track) => queue.metadata.channel.send(`:musical_note: | Now playing **${track.title}**`));
 player.on('error', (queue, error) => {
