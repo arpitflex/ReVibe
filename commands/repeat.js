@@ -9,10 +9,12 @@ module.exports = {
             option
                 .setName('mode')
                 .setDescription('The repeat mode')
-                .addChoice('OFF', QueueRepeatMode.OFF)
-                .addChoice('TRACK', QueueRepeatMode.TRACK)
-                .addChoice('QUEUE', QueueRepeatMode.QUEUE)
-                .addChoice('AUTOPLAY', QueueRepeatMode.AUTOPLAY)
+                .addChoices(
+                    {name: 'OFF', value: QueueRepeatMode.OFF},
+                    {name: 'TRACK', value: QueueRepeatMode.TRACK},
+                    {name: 'QUEUE', value: QueueRepeatMode.QUEUE},
+                    {name: 'AUTOPLAY', value: QueueRepeatMode.AUTOPLAY}
+                )
                 .setRequired(true)
         ),
     async execute(interaction, client, player) {
