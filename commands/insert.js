@@ -54,8 +54,8 @@ module.exports = {
 
         const track = tracks[0];
         const index = interaction.options.getInteger('index');
-        const queueLength = queue.tracks.length;
-        await queue.insert(track, Math.min(Math.max(0, index) - 1, queueLength));
+        const position = Math.min(Math.max(0, index) - 1, queue.tracks.length)
+        await queue.insert(track, position);
 
         const playEmbed = new MessageEmbed()
             .setColor('#fbd75a')
@@ -68,7 +68,7 @@ module.exports = {
             .setThumbnail(track.thumbnail)
             .addField('Duration', track.duration, true)
             .addField('Source', track.source, true)
-            .addField('Position in queue', queueLength === 0 ? 'Now playing' : String(queueLength), true);
+            .addField('Position in queue', String(position), true);
 
         return await interaction.followUp({embeds: [playEmbed]});
     }
