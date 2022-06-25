@@ -59,6 +59,7 @@ module.exports = {
                     });
                 await interaction.followUp({embeds: [lyricsEmbed]});
             }
+            return;
         } else {
             return await interaction.followUp({content: `:interrobang: | **Lyrics for ${query ?? currentTrack.title} could not be found!**`});
         }
