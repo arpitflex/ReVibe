@@ -1,23 +1,24 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
 const {QueueRepeatMode} = require('discord-player');
 
+const repeatCommand = new SlashCommandBuilder()
+    .setName('repeat')
+    .setDescription('Change repeat mode!')
+    .addIntegerOption((option) =>
+        option
+            .setName('mode')
+            .setDescription('The repeat mode')
+            .addChoices(
+                {name: 'OFF', value: QueueRepeatMode.OFF},
+                {name: 'TRACK', value: QueueRepeatMode.TRACK},
+                {name: 'QUEUE', value: QueueRepeatMode.QUEUE},
+                {name: 'AUTOPLAY', value: QueueRepeatMode.AUTOPLAY}
+            )
+            .setRequired(true)
+    );
+
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('repeat')
-        .setDescription('Change repeat mode!')
-        .addIntegerOption((option) =>
-            option
-                .setName('mode')
-                .setDescription('The repeat mode')
-                .addChoices(
-                    {name: 'OFF', value: QueueRepeatMode.OFF},
-                    {name: 'TRACK', value: QueueRepeatMode.TRACK},
-                    {name: 'QUEUE', value: QueueRepeatMode.QUEUE},
-                    {name: 'AUTOPLAY', value: QueueRepeatMode.AUTOPLAY}
-                )
-                .setRequired(true)
-        ),
-    async execute(interaction, client, player) {
+    data: repeatCommand, async execute(interaction, client, player) {
         if (!interaction.member.voice.channelId) {
             return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
         }

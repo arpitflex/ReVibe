@@ -1,10 +1,11 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
 
+const shuffleCommand = new SlashCommandBuilder()
+    .setName('shuffle')
+    .setDescription('Shuffle the queue!');
+
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('shuffle')
-        .setDescription('Shuffle the queue!'),
-    async execute(interaction, client, player) {
+    data: shuffleCommand, async execute(interaction, client, player) {
         if (!interaction.member.voice.channelId) {
             return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
         }

@@ -1,10 +1,11 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
 
+const toggleCommand = new SlashCommandBuilder()
+    .setName('toggle')
+    .setDescription('Toggle play/pause!');
+
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('toggle')
-        .setDescription('Toggle play/pause!'),
-    async execute(interaction, client, player) {
+    data: toggleCommand, async execute(interaction, client, player) {
         const queue = player.getQueue(interaction.guildId);
 
         if (!interaction.member.voice.channelId) {

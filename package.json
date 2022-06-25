@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/ViperFlex/ReVibe#readme",
   "dependencies": {
+    "@discord-player/extractor": "^3.0.2",
     "@discordjs/builders": "^0.15.0",
     "@discordjs/opus": "^0.7.0",
     "@discordjs/rest": "^0.5.0",

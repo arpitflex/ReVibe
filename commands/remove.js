@@ -1,16 +1,17 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
 
+const removeCommand = new SlashCommandBuilder()
+    .setName('remove')
+    .setDescription('Remove a track from the queue!')
+    .addIntegerOption((option) =>
+        option
+            .setName('track_number')
+            .setDescription('Track number of song to remove from queue')
+            .setRequired(true)
+    );
+
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('remove')
-        .setDescription('Remove a track from the queue!')
-        .addIntegerOption((option) =>
-            option
-                .setName('track_number')
-                .setDescription('Track number of song to remove from queue')
-                .setRequired(true)
-        ),
-    async execute(interaction, client, player) {
+    data: removeCommand, async execute(interaction, client, player) {
         if (!interaction.member.voice.channelId) {
             return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
         }

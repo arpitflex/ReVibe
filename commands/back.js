@@ -1,10 +1,11 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
 
+const backCommand = new SlashCommandBuilder()
+    .setName('back')
+    .setDescription('Play the previous song!');
+
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('back')
-        .setDescription('Play the previous song!'),
-    async execute(interaction, client, player) {
+    data: backCommand, async execute(interaction, client, player) {
         if (!interaction.member.voice.channelId) {
             return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
         }
@@ -18,6 +19,9 @@ module.exports = {
             return await interaction.followUp({content: 'No previous tracks', ephemeral: true});
         }
         await queue.back()
-        return await interaction.followUp({content: `:previous_track: | Playing **${queue.current.title}** again`, ephemeral: true});
+        return await interaction.followUp({
+            content: `:previous_track: | Playing **${queue.current.title}** again`,
+            ephemeral: true
+        });
     }
 }

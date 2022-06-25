@@ -1,10 +1,11 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
 
+const skipCommand = new SlashCommandBuilder()
+    .setName('skip')
+    .setDescription('Skip the current song!');
+
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('skip')
-        .setDescription('Skip the current song!'),
-    async execute(interaction, client, player) {
+    data: skipCommand, async execute(interaction, client, player) {
         if (!interaction.member.voice.channelId) {
             return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
         }

@@ -1,16 +1,17 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
 
+const seekCommand = new SlashCommandBuilder()
+    .setName('seek')
+    .setDescription('Seek to a certain time!')
+    .addIntegerOption((option) =>
+        option
+            .setName('seconds')
+            .setDescription('The time (in seconds!) to navigate to')
+            .setRequired(true)
+    )
+
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('seek')
-        .setDescription('Seek to a certain time!')
-        .addIntegerOption((option) =>
-            option
-                .setName('seconds')
-                .setDescription('The time (in seconds!) to navigate to')
-                .setRequired(true)
-        ),
-    async execute(interaction, client, player) {
+    data: seekCommand, async execute(interaction, client, player) {
         if (!interaction.member.voice.channelId) {
             return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
         }

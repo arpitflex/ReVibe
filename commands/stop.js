@@ -1,10 +1,11 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
 
+const stopCommand = new SlashCommandBuilder()
+    .setName('stop')
+    .setDescription('Stop playback!');
+
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('stop')
-        .setDescription('Stop playback!'),
-    async execute(interaction, client, player) {
+    data: stopCommand, async execute(interaction, client, player) {
         if (!interaction.member.voice.channelId) {
             return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
         }
