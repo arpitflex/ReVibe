@@ -29,7 +29,7 @@ module.exports = {
 
         await interaction.deferReply();
 
-        const lyricsData = await lyricsClient.search(query ?? currentTrack.title).then();
+        const lyricsData = await lyricsClient.search(query ?? (currentTrack.searchQuery ?? currentTrack.title)).then();
 
         if (lyricsData) {
             const messages = [];

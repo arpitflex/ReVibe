@@ -53,6 +53,7 @@ module.exports = {
         }
 
         const track = tracks[0];
+        track.searchQuery = query;
         const index = interaction.options.getInteger('index');
         const position = Math.min(Math.max(0, index) - 1, queue.tracks.length)
         await queue.insert(track, position);

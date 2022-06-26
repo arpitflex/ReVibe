@@ -48,6 +48,7 @@ module.exports = {
         }
 
         const track = tracks[0];
+        track.searchQuery = query;
         await queue.play(track);
         const queueLength = queue.tracks.length;
 
