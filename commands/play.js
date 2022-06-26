@@ -48,14 +48,16 @@ module.exports = {
         }
 
         const track = tracks[0];
-        track.searchQuery = query;
         await queue.play(track);
+        if (!/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g.test(query)) {
+            track.searchQuery = query;
+        }
         const queueLength = queue.tracks.length;
 
         tracks.shift();
         const isPlaylist = query.includes('/playlist' || '/album');
         if (isPlaylist && tracks.length > 1) {
-            queue.addTracks(tracks)
+            queue.addTracks(tracks);
         }
 
         const playEmbed = new MessageEmbed()

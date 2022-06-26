@@ -24,6 +24,7 @@
     "@discordjs/rest": "^0.5.0",
     "discord-api-types": "^0.35.0",
     "discord-player": "^5.2.2",
-    "discord.js": "^13.8.1"
+    "discord.js": "^13.8.1",
+    "ytly": "^1.0.9"
   }
 }
