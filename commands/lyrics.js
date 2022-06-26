@@ -90,6 +90,6 @@ module.exports = {
             }
         }
 
-        return await interaction.followUp({content: `:thought_balloon: | **Lyrics for ${lyricsSearch} could not be found!**`});
+        return await interaction.followUp({content: `:thought_balloon: | **Lyrics for ${lyricsSearch} could not be found!**`, ephemeral: true});
     }
 }
