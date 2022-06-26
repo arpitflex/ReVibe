@@ -7,7 +7,7 @@ const lyricsClient = Lyrics.init();
 
 const lyricsCommand = new SlashCommandBuilder()
     .setName('lyrics')
-    .setDescription('Get lyrics of the current song! Songs from YouTube are unreliable')
+    .setDescription('Get lyrics of the current song! Songs from Spotify are more reliable.')
     .addStringOption((option) => option
         .setName('query')
         .setDescription('The song you want to find the lyrics for'));
@@ -90,6 +90,6 @@ module.exports = {
             }
         }
 
-        return await interaction.followUp({content: `:thought_balloon: | **Lyrics for ${lyricsSearch} could not be found!**`, ephemeral: true});
+        return await interaction.followUp({content: `:thought_balloon: | Lyrics for **${lyricsSearch}** could not be found!`, ephemeral: true});
     }
 }

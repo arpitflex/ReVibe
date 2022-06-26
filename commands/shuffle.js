@@ -1,4 +1,5 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
+const queueEvent = require('./queue');
 
 const shuffleCommand = new SlashCommandBuilder()
     .setName('shuffle')
@@ -14,8 +15,7 @@ module.exports = {
         }
 
         const queue = player.getQueue(interaction.guildId);
-        await interaction.deferReply();
         queue.shuffle();
-        return await interaction.followUp({content: `:twisted_rightwards_arrows: | **Shuffled!**`});
+        return queueEvent.execute(interaction, client, player);
     }
 }

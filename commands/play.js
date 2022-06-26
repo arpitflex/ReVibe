@@ -55,7 +55,7 @@ module.exports = {
         const queueLength = queue.tracks.length;
 
         tracks.shift();
-        const isPlaylist = query.includes('/playlist' || '/album');
+        const isPlaylist = query.includes('/playlist') || query.includes('/album');
         if (isPlaylist && tracks.length > 1) {
             queue.addTracks(tracks);
         }
