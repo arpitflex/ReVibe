@@ -14,6 +14,13 @@ const playCommand = new SlashCommandBuilder()
 
 module.exports = {
     data: playCommand, async execute(interaction, client, player) {
+        if (!interaction.member.voice.channelId) {
+            return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
+        }
+        if (interaction.guild.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.me.voice.channelId) {
+            return await interaction.reply({content: 'You are not in my voice channel', ephemeral: true});
+        }
+
         const query = interaction.options.getString('query');
         const queue = player.createQueue(interaction.guild, {
             metadata: {
