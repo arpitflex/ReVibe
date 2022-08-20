@@ -1,17 +1,20 @@
-const {SlashCommandBuilder} = require('@discordjs/builders');
-
-const jumpCommand = new SlashCommandBuilder()
-    .setName('jump')
-    .setDescription('Jump to a particular track!')
-    .addIntegerOption((option) =>
-        option
-            .setName('track_number')
-            .setDescription('Track number of song to jump to')
-            .setRequired(true)
-    );
+const {ApplicationCommandOptionType} = require("discord.js");
 
 module.exports = {
-    data: jumpCommand, async execute(interaction, client, player) {
+    data: {
+        name: 'jump',
+        description: 'Jump to a particular track!',
+        options: [
+            {
+                name: 'track_number',
+                description: 'Track number of song to jump to',
+                type: ApplicationCommandOptionType.Integer,
+                required: true
+            }
+        ],
+        voiceChannel: true
+    },
+    async execute(interaction, client, player) {
         if (!interaction.member.voice.channelId) {
             return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
         }

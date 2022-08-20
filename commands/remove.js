@@ -1,24 +1,20 @@
-const {SlashCommandBuilder} = require('@discordjs/builders');
-
-const removeCommand = new SlashCommandBuilder()
-    .setName('remove')
-    .setDescription('Remove a track from the queue!')
-    .addIntegerOption((option) =>
-        option
-            .setName('track_number')
-            .setDescription('Track number of song to remove from queue')
-            .setRequired(true)
-    );
+const {ApplicationCommandOptionType} = require('discord.js');
 
 module.exports = {
-    data: removeCommand, async execute(interaction, client, player) {
-        if (!interaction.member.voice.channelId) {
-            return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
-        }
-        if (interaction.guild.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.me.voice.channelId) {
-            return await interaction.reply({content: 'You are not in my voice channel', ephemeral: true});
-        }
-
+    data: {
+        name: 'remove',
+        description: 'Remove a track from the queue!',
+        options: [
+            {
+                name: 'track_number',
+                description: 'Track number of song to remove from queue',
+                type: ApplicationCommandOptionType.Integer,
+                required: true
+            }
+        ],
+        voiceChannel: true
+    },
+    async execute(interaction, client, player) {
         const queue = player.getQueue(interaction.guildId);
         await interaction.deferReply();
 

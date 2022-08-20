@@ -1,31 +1,27 @@
-const {SlashCommandBuilder} = require('@discordjs/builders');
+const {ApplicationCommandOptionType} = require('discord.js');
 const {QueueRepeatMode} = require('discord-player');
 
-const repeatCommand = new SlashCommandBuilder()
-    .setName('repeat')
-    .setDescription('Change repeat mode!')
-    .addIntegerOption((option) =>
-        option
-            .setName('mode')
-            .setDescription('The repeat mode')
-            .addChoices(
-                {name: 'OFF', value: QueueRepeatMode.OFF},
-                {name: 'TRACK', value: QueueRepeatMode.TRACK},
-                {name: 'QUEUE', value: QueueRepeatMode.QUEUE},
-                {name: 'AUTOPLAY', value: QueueRepeatMode.AUTOPLAY}
-            )
-            .setRequired(true)
-    );
-
 module.exports = {
-    data: repeatCommand, async execute(interaction, client, player) {
-        if (!interaction.member.voice.channelId) {
-            return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
-        }
-        if (interaction.guild.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.me.voice.channelId) {
-            return await interaction.reply({content: 'You are not in my voice channel', ephemeral: true});
-        }
-
+    data: {
+        name: 'repeat',
+        description: 'Change repeat mode!',
+        options: [
+            {
+                name: 'mode',
+                description: 'The repeat mode',
+                type: ApplicationCommandOptionType.Integer,
+                choices: [
+                    {name: 'OFF', value: QueueRepeatMode.OFF},
+                    {name: 'TRACK', value: QueueRepeatMode.TRACK},
+                    {name: 'QUEUE', value: QueueRepeatMode.QUEUE},
+                    {name: 'AUTOPLAY', value: QueueRepeatMode.AUTOPLAY}
+                ],
+                required: true
+            }
+        ],
+        voiceChannel: true
+    },
+    async execute(interaction, client, player) {
         const queue = player.getQueue(interaction.guildId);
         const mode = interaction.options.getInteger('mode');
         await interaction.deferReply();

@@ -1,24 +1,20 @@
-const {SlashCommandBuilder} = require('@discordjs/builders');
-
-const seekCommand = new SlashCommandBuilder()
-    .setName('seek')
-    .setDescription('Seek to a certain time!')
-    .addIntegerOption((option) =>
-        option
-            .setName('seconds')
-            .setDescription('The time (in seconds!) to navigate to')
-            .setRequired(true)
-    )
+const {ApplicationCommandOptionType} = require("discord.js");
 
 module.exports = {
-    data: seekCommand, async execute(interaction, client, player) {
-        if (!interaction.member.voice.channelId) {
-            return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
-        }
-        if (interaction.guild.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.me.voice.channelId) {
-            return await interaction.reply({content: 'You are not in my voice channel', ephemeral: true});
-        }
-
+    data: {
+        name: 'seek',
+        description: 'Seek to a certain time!',
+        options: [
+            {
+                name: 'seconds',
+                description: 'The time (in seconds!) to navigate to',
+                type: ApplicationCommandOptionType.Integer,
+                required: true
+            }
+        ],
+        voiceChannel: true
+    },
+    async execute(interaction, client, player) {
         const queue = player.getQueue(interaction.guildId);
         const seconds = interaction.options.getInteger('seconds');
         await interaction.deferReply();

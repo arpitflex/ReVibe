@@ -1,26 +1,21 @@
 const {QueryType} = require('discord-player');
-const {SlashCommandBuilder} = require('@discordjs/builders');
-const {MessageEmbed} = require("discord.js");
-
-const playCommand = new SlashCommandBuilder()
-    .setName('play')
-    .setDescription('Play a song!')
-    .addStringOption((option) =>
-        option
-            .setName('query')
-            .setDescription('The song/playlist/album you want to play')
-            .setRequired(true)
-    );
+const {ApplicationCommandOptionType} = require("discord.js");
 
 module.exports = {
-    data: playCommand, async execute(interaction, client, player) {
-        if (!interaction.member.voice.channelId) {
-            return await interaction.reply({content: 'You are not in a voice channel', ephemeral: true});
-        }
-        if (interaction.guild.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.me.voice.channelId) {
-            return await interaction.reply({content: 'You are not in my voice channel', ephemeral: true});
-        }
-
+    data: {
+        name: 'play',
+        description: 'Play a song!',
+        options: [
+            {
+                name: 'query',
+                description: 'The song/playlist/album you want to play',
+                type: ApplicationCommandOptionType.String,
+                required: true
+            }
+        ],
+        voiceChannel: true
+    },
+    async execute(interaction, client, player) {
         const query = interaction.options.getString('query');
         const queue = player.createQueue(interaction.guild, {
             metadata: {
@@ -60,18 +55,35 @@ module.exports = {
             queue.addTracks(tracks);
         }
 
-        const playEmbed = new MessageEmbed()
-            .setColor('#fbd75a')
-            .setTitle(track.title)
-            .setURL(track.url)
-            .setAuthor({
+        const playEmbed = {
+            color: 0xfbd75a,
+            title: track.title,
+            url: track.url,
+            author: {
                 name: 'Added to queue',
-                iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`
-            })
-            .setThumbnail(track.thumbnail)
-            .addField('Duration', track.duration, true)
-            .addField('Source', track.source, true)
-            .addField('Position in queue', queueLength === 0 ? 'Now playing' : String(queueLength), true);
+                icon_url: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`
+            },
+            thumbnail: {
+                url: track.thumbnail
+            },
+            fields: [
+                {
+                    name: 'Duration',
+                    value: track.duration,
+                    inline: true
+                },
+                {
+                    name: 'Source',
+                    value: track.source,
+                    inline: true
+                },
+                {
+                    name: 'Position in queue',
+                    value: queueLength === 0 ? 'Now playing' : String(queueLength),
+                    inline: true
+                }
+            ]
+        };
 
         return await interaction.followUp({embeds: [playEmbed]});
     }

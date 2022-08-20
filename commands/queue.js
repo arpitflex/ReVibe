@@ -1,12 +1,9 @@
-const {SlashCommandBuilder} = require('@discordjs/builders');
-const {MessageEmbed} = require('discord.js');
-
-const queueCommand = new SlashCommandBuilder()
-    .setName('queue')
-    .setDescription('View the current queue!');
-
 module.exports = {
-    data: queueCommand, async execute(interaction, client, player) {
+    data: {
+        name: 'queue',
+        description: 'View the current queue!'
+    },
+    async execute(interaction, client, player) {
         const queue = player.getQueue(interaction.guildId);
         const tracks = queue.tracks;
         if (!queue.playing) {
@@ -32,37 +29,64 @@ module.exports = {
         while (i < messages.length && i < 5) {
             if (i === 0) {
                 const current = queue.current;
-                embeds[i] = new MessageEmbed()
-                    .setColor('#fbd75a')
-                    .setTitle('Queue')
-                    .addField(':arrow_forward: | Now Playing:', `[${current.title}](${current.url}) | \`${current.duration} Requested by: ${current.requestedBy.username}\``)
-                    .setFooter({
+
+                embeds[i] = {
+                    color: 0xfbd75a,
+                    title: 'Queue',
+                    fields: [
+                        {
+                            name: ':arrow_forward: | Now Playing:',
+                            value: `[${current.title}](${current.url}) | \`${current.duration} Requested by: ${current.requestedBy.username}\``
+                        }
+                    ],
+                    footer: {
                         text: `${tracks.length === 1 ? '1 track' : tracks.length + ' tracks'} in queue${messages.length > 0 ? `. Part ${i + 1}/${messages.length}` : ''}`,
-                        iconURL: interaction.user.avatar?.startsWith('a_') ? `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.gif` : `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`
-                    });
+                        icon_url: interaction.user.avatar?.startsWith('a_') ? `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.gif` : `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`
+                    }
+                }
+
                 if (tracks.length !== 0) {
-                    embeds[i]
-                        .addField('\u200b', '\u200b')
-                        .addField(':arrow_heading_down: | Up Next:', messages[i])
+                    embeds[i].fields.push(
+                        {
+                            name: '\u200b',
+                            value: '\u200b'
+                        },
+                        {
+                            name: ':arrow_heading_down: | Up Next:',
+                            value: messages[i]
+                        }
+                    );
                 }
             } else if (i === 4 && messages.length !== 5) {
-                embeds[i] = new MessageEmbed()
-                    .setColor('#fbd75a')
-                    .setTitle('Queue')
-                    .addField(':arrow_heading_down: | Up Next:', messages[i])
-                    .setFooter({
+                embeds[i] = {
+                    color: 0xfbd75a,
+                    title: 'Queue',
+                    fields: [
+                        {
+                            name: ':arrow_heading_down: | Up Next:',
+                            value: messages[i]
+                        }
+                    ],
+                    footer: {
                         text: `${tracks.length === 1 ? '1 track' : tracks.length + ' tracks'} in queue. Part ${i + 1}/${messages.length}. More Parts can be shown as the queue progresses!`,
-                        iconURL: interaction.user.avatar?.startsWith('a_') ? `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.gif` : `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`
-                    });
+                        icon_url: interaction.user.avatar?.startsWith('a_') ? `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.gif` : `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`
+                    }
+                }
             } else {
-                embeds[i] = new MessageEmbed()
-                    .setColor('#fbd75a')
-                    .setTitle('Queue')
-                    .addField(':arrow_heading_down: | Up Next:', messages[i])
-                    .setFooter({
+                embeds[i] = {
+                    color: 0xfbd75a,
+                    title: 'Queue',
+                    fields: [
+                        {
+                            name: ':arrow_heading_down: | Up Next:',
+                            value: messages[i]
+                        }
+                    ],
+                    footer: {
                         text: `${tracks.length === 1 ? '1 track' : tracks.length + ' tracks'} in queue. Part ${i + 1}/${messages.length}`,
-                        iconURL: interaction.user.avatar?.startsWith('a_') ? `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.gif` : `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`
-                    });
+                        icon_url: interaction.user.avatar?.startsWith('a_') ? `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.gif` : `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`
+                    }
+                }
             }
 
             i++;
