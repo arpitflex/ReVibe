@@ -1,5 +1,5 @@
 const {QueryType} = require('discord-player');
-const {ApplicationCommandOptionType} = require("discord.js");
+const {ApplicationCommandOptionType} = require('discord.js');
 
 module.exports = {
     data: {

@@ -1,5 +1,5 @@
-const {ApplicationCommandOptionType} = require("discord.js");
-const {Lyrics} = require("@discord-player/extractor");
+const {ApplicationCommandOptionType} = require('discord.js');
+const {Lyrics} = require('@discord-player/extractor');
 const ytly = require('ytly');
 
 const lyricsClient = Lyrics.init();
