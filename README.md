@@ -1,2 +1,4 @@
 # ReVibe
-Because all the other Discord Music Bots suck (Especially FredBoat). Made by someone who's vibe was ruined.
+Made by someone whose vibe was ruined.
+
+Please use my new, more stable implementation written in TypeScript: https://github.com/arpitflex/ReVibeTS
