@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "serve": "node .",
-    "reserve": "node deploy-commands.js && node ."
+    "reserve": "node deploy-commands.js && node .",
+    "update": "npx npm-check-updates -i"
   },
   "repository": {
     "type": "git",
@@ -18,12 +19,12 @@
   },
   "homepage": "https://github.com/ViperFlex/ReVibe#readme",
   "dependencies": {
-    "@discord-player/extractor": "~3.0.2",
-    "@discordjs/opus": "~0.8.0",
-    "@discordjs/rest": "~1.0.1",
-    "discord-player": "~5.3.1",
-    "discord.js": "~14.2.0",
-    "ffmpeg-static": "~5.0.2",
+    "@discord-player/extractor": "~4.1.2",
+    "@discordjs/opus": "~0.9.0",
+    "@discordjs/rest": "~1.6.0",
+    "discord-player": "~6.1.1",
+    "discord.js": "~14.8.0",
+    "ffmpeg-static": "~5.1.0",
     "ytly": "~1.0.9"
   }
 }
